@@ -1,216 +1,357 @@
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Check, Download, Printer, Zap, Shield, Phone } from "lucide-react";
-import printerImage from "@/assets/printer-hero.png";
+import { 
+  Check, 
+  Download, 
+  Printer, 
+  Zap, 
+  Shield, 
+  Phone,
+  ChevronRight,
+  Star,
+  Truck,
+  Headphones,
+  Copy,
+  Scan,
+  FileText
+} from "lucide-react";
+
+import printerHero from "@/assets/printer-hero.png";
+import printerFront from "@/assets/printer-front.png";
+import printerDisplay from "@/assets/printer-display.png";
+import printerTray from "@/assets/printer-tray.png";
+
+import ProductGallery from "@/components/ProductGallery";
 import TechnicalSpecs from "@/components/TechnicalSpecs";
 import RentalPlans from "@/components/RentalPlans";
 import QuoteForm from "@/components/QuoteForm";
-import { useState } from "react";
+import ProductHeader from "@/components/ProductHeader";
 
 const Index = () => {
   const [showQuoteForm, setShowQuoteForm] = useState(false);
 
-  const features = [
-    "Stampa fino a 55 ppm in B/N e 50 ppm a colori",
-    "Scansione fronte/retro automatica",
-    "Connettività Wi-Fi, Ethernet e USB 3.0",
-    "Display touchscreen 10.1\" a colori",
-    "Capacità carta fino a 6.350 fogli",
+  const productImages = [
+    { src: printerHero, alt: "ProPrint MX-5500 Vista Principale" },
+    { src: printerFront, alt: "ProPrint MX-5500 Vista Frontale" },
+    { src: printerDisplay, alt: "Display Touchscreen" },
+    { src: printerTray, alt: "Cassetti Carta" },
+  ];
+
+  const highlights = [
+    { icon: Printer, label: "55 ppm B/N", desc: "Alta velocità" },
+    { icon: Copy, label: "50 ppm Colore", desc: "Qualità foto" },
+    { icon: Scan, label: "80 ipm", desc: "Scansione duplex" },
+    { icon: FileText, label: "A3/A4", desc: "Multi-formato" },
+  ];
+
+  const trustBadges = [
+    { icon: Truck, text: "Consegna 24/48h" },
+    { icon: Shield, text: "Garanzia 3 anni" },
+    { icon: Headphones, text: "Assistenza dedicata" },
   ];
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b border-border bg-card">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Printer className="h-8 w-8 text-primary" />
-            <span className="text-xl font-bold text-foreground">PrintPro Solutions</span>
-          </div>
-          <nav className="hidden md:flex items-center gap-6">
-            <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">Prodotti</a>
-            <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">Noleggio</a>
-            <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">Assistenza</a>
-            <Button variant="outline" size="sm" className="gap-2">
-              <Phone className="h-4 w-4" />
-              Contattaci
-            </Button>
-          </nav>
-        </div>
-      </header>
+      <ProductHeader onContactClick={() => setShowQuoteForm(true)} />
 
       {/* Breadcrumb */}
       <div className="container mx-auto px-4 py-4">
-        <nav className="text-sm text-muted-foreground">
-          <span>Home</span>
-          <span className="mx-2">/</span>
-          <span>Stampanti Multifunzione</span>
-          <span className="mx-2">/</span>
+        <nav className="flex items-center gap-2 text-sm text-muted-foreground">
+          <span className="hover:text-foreground cursor-pointer transition-colors">Home</span>
+          <ChevronRight className="h-4 w-4" />
+          <span className="hover:text-foreground cursor-pointer transition-colors">Stampanti</span>
+          <ChevronRight className="h-4 w-4" />
           <span className="text-foreground font-medium">ProPrint MX-5500</span>
         </nav>
       </div>
 
       {/* Hero Product Section */}
-      <section className="container mx-auto px-4 py-8">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Product Image */}
-          <div className="card-elevated rounded-2xl p-8 animate-fade-in">
-            <div className="relative">
-              <Badge className="absolute top-0 left-0 bg-accent text-accent-foreground">
-                Bestseller
-              </Badge>
-              <img
-                src={printerImage}
-                alt="ProPrint MX-5500 Stampante Multifunzione"
-                className="w-full h-auto max-h-[500px] object-contain"
-              />
-            </div>
+      <section className="container mx-auto px-4 py-8 lg:py-12">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-start">
+          {/* Product Gallery - Sticky on desktop */}
+          <div className="lg:sticky lg:top-8">
+            <ProductGallery images={productImages} />
           </div>
 
           {/* Product Info */}
-          <div className="space-y-6 animate-slide-in-right">
-            <div>
-              <Badge variant="outline" className="mb-3 text-primary border-primary">
+          <motion.div 
+            className="space-y-8"
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            {/* Badges */}
+            <div className="flex flex-wrap gap-2">
+              <Badge className="bg-success/10 text-success border-0 font-medium">
+                <Check className="h-3 w-3 mr-1" />
+                Disponibile
+              </Badge>
+              <Badge variant="outline" className="border-primary/30 text-primary font-medium">
                 Multifunzione A3/A4
               </Badge>
-              <h1 className="text-4xl lg:text-5xl font-bold text-foreground leading-tight">
+              <Badge className="bg-accent/10 text-accent border-0 font-medium">
+                <Star className="h-3 w-3 mr-1 fill-current" />
+                Bestseller
+              </Badge>
+            </div>
+
+            {/* Title */}
+            <div className="space-y-2">
+              <h1 className="text-display-sm lg:text-display font-bold text-foreground">
                 ProPrint MX-5500
               </h1>
-              <p className="text-xl text-muted-foreground mt-2">
-                Stampante Multifunzione Professionale
+              <p className="text-xl text-muted-foreground">
+                Stampante Multifunzione Laser a Colori
               </p>
             </div>
 
+            {/* Quick Highlights */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              {highlights.map((item, index) => (
+                <motion.div
+                  key={item.label}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 + index * 0.1 }}
+                  className="card-premium p-4 text-center"
+                >
+                  <item.icon className="h-5 w-5 text-primary mx-auto mb-2" />
+                  <div className="font-semibold text-foreground">{item.label}</div>
+                  <div className="text-xs text-muted-foreground">{item.desc}</div>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Description */}
             <p className="text-lg text-muted-foreground leading-relaxed">
-              La soluzione completa per uffici esigenti. Stampa, copia, scansiona e invia fax con 
-              qualità professionale. Progettata per volumi elevati e massima affidabilità nel 
-              tempo, con costi operativi ottimizzati.
+              La soluzione completa per uffici che non si accontentano. Stampa, copia, 
+              scansiona e invia fax con qualità professionale. Progettata per volumi 
+              elevati e massima affidabilità, con tecnologia avanzata che riduce i 
+              costi operativi fino al 30%.
             </p>
 
-            <ul className="space-y-3">
-              {features.map((feature, index) => (
-                <li key={index} className="flex items-center gap-3 text-foreground">
-                  <div className="h-5 w-5 rounded-full bg-primary/10 flex items-center justify-center">
-                    <Check className="h-3 w-3 text-primary" />
+            {/* Key Features List */}
+            <div className="space-y-3">
+              {[
+                "Display touchscreen 10.1\" intuitivo con interfaccia personalizzabile",
+                "Connettività completa: Wi-Fi, Ethernet, USB 3.0, NFC per mobile print",
+                "Sicurezza enterprise: crittografia dati, autenticazione utente avanzata",
+                "Capacità carta fino a 6.350 fogli con cassetti opzionali",
+              ].map((feature, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.5 + index * 0.1 }}
+                  className="flex items-start gap-3"
+                >
+                  <div className="h-6 w-6 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
+                    <Check className="h-3.5 w-3.5 text-primary" />
                   </div>
-                  {feature}
-                </li>
+                  <span className="text-foreground">{feature}</span>
+                </motion.div>
               ))}
-            </ul>
+            </div>
 
+            {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <Button 
                 size="lg" 
-                className="bg-accent hover:bg-accent/90 text-accent-foreground btn-accent-glow text-lg px-8"
+                className="bg-gradient-accent text-accent-foreground shadow-accent-glow text-lg px-8 h-14 font-semibold"
                 onClick={() => setShowQuoteForm(true)}
               >
-                Richiedi Preventivo
+                Richiedi Preventivo Gratuito
               </Button>
-              <Button size="lg" variant="outline" className="gap-2">
+              <Button size="lg" variant="outline" className="gap-2 h-14 text-lg">
                 <Download className="h-5 w-5" />
-                Scarica Brochure
+                Brochure PDF
               </Button>
             </div>
 
             {/* Trust Badges */}
             <div className="flex flex-wrap gap-6 pt-6 border-t border-border">
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Zap className="h-5 w-5 text-primary" />
-                Installazione in 24h
-              </div>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Shield className="h-5 w-5 text-primary" />
-                Garanzia 3 anni
-              </div>
+              {trustBadges.map((badge, index) => (
+                <div key={index} className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <badge.icon className="h-5 w-5 text-primary" />
+                  <span>{badge.text}</span>
+                </div>
+              ))}
             </div>
-          </div>
+
+            {/* Rental Teaser */}
+            <motion.div 
+              className="card-premium p-6 bg-gradient-subtle"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8 }}
+            >
+              <div className="flex items-center justify-between flex-wrap gap-4">
+                <div>
+                  <p className="text-sm text-muted-foreground mb-1">Noleggio operativo da</p>
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-3xl font-bold text-foreground">€89</span>
+                    <span className="text-muted-foreground">/mese</span>
+                  </div>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Toner e assistenza inclusi • 36 mesi
+                  </p>
+                </div>
+                <Button variant="outline" className="gap-2" onClick={() => {
+                  const tabsElement = document.querySelector('[data-value="rental"]');
+                  if (tabsElement) {
+                    tabsElement.scrollIntoView({ behavior: 'smooth' });
+                    (tabsElement as HTMLElement).click();
+                  }
+                }}>
+                  Scopri i piani
+                  <ChevronRight className="h-4 w-4" />
+                </Button>
+              </div>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 
       {/* Tabs Section */}
-      <section className="container mx-auto px-4 py-12">
-        <Tabs defaultValue="overview" className="w-full">
-          <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-3 mb-8">
-            <TabsTrigger value="overview" className="text-base">Panoramica</TabsTrigger>
-            <TabsTrigger value="specs" className="text-base">Specifiche Tecniche</TabsTrigger>
-            <TabsTrigger value="rental" className="text-base">Noleggio</TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="overview" className="animate-fade-in">
-            <div className="grid md:grid-cols-3 gap-6">
-              <div className="card-elevated card-hover rounded-xl p-6">
-                <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-                  <Printer className="h-6 w-6 text-primary" />
-                </div>
-                <h3 className="text-xl font-semibold text-foreground mb-2">Stampa di Qualità</h3>
-                <p className="text-muted-foreground">
-                  Risoluzione fino a 1200x1200 dpi per documenti nitidi e immagini vivide. 
-                  Tecnologia laser avanzata per risultati professionali.
-                </p>
-              </div>
-              <div className="card-elevated card-hover rounded-xl p-6">
-                <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-                  <Zap className="h-6 w-6 text-primary" />
-                </div>
-                <h3 className="text-xl font-semibold text-foreground mb-2">Alta Produttività</h3>
-                <p className="text-muted-foreground">
-                  Ciclo mensile fino a 300.000 pagine. Primo documento in uscita in meno 
-                  di 4 secondi per massimizzare l'efficienza del tuo team.
-                </p>
-              </div>
-              <div className="card-elevated card-hover rounded-xl p-6">
-                <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-                  <Shield className="h-6 w-6 text-primary" />
-                </div>
-                <h3 className="text-xl font-semibold text-foreground mb-2">Sicurezza Avanzata</h3>
-                <p className="text-muted-foreground">
-                  Autenticazione utente, crittografia dati e gestione centralizzata. 
-                  Conforme agli standard di sicurezza enterprise.
-                </p>
-              </div>
+      <section className="bg-gradient-subtle py-16 lg:py-24">
+        <div className="container mx-auto px-4">
+          <Tabs defaultValue="overview" className="w-full">
+            <div className="flex justify-center mb-12">
+              <TabsList className="h-14 p-1.5 bg-card shadow-premium">
+                <TabsTrigger value="overview" className="h-full px-6 text-base font-medium data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+                  Panoramica
+                </TabsTrigger>
+                <TabsTrigger value="specs" className="h-full px-6 text-base font-medium data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+                  Specifiche Tecniche
+                </TabsTrigger>
+                <TabsTrigger value="rental" data-value="rental" className="h-full px-6 text-base font-medium data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+                  Noleggio
+                </TabsTrigger>
+              </TabsList>
             </div>
-          </TabsContent>
 
-          <TabsContent value="specs" className="animate-fade-in">
-            <TechnicalSpecs />
-          </TabsContent>
+            <AnimatePresence mode="wait">
+              <TabsContent value="overview" className="mt-0">
+                <OverviewSection />
+              </TabsContent>
 
-          <TabsContent value="rental" className="animate-fade-in">
-            <RentalPlans onRequestQuote={() => setShowQuoteForm(true)} />
-          </TabsContent>
-        </Tabs>
+              <TabsContent value="specs" className="mt-0">
+                <TechnicalSpecs />
+              </TabsContent>
+
+              <TabsContent value="rental" className="mt-0">
+                <RentalPlans onRequestQuote={() => setShowQuoteForm(true)} />
+              </TabsContent>
+            </AnimatePresence>
+          </Tabs>
+        </div>
       </section>
 
       {/* CTA Section */}
-      <section className="bg-primary py-16">
+      <section className="bg-gradient-dark py-20 lg:py-28">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl lg:text-4xl font-bold text-primary-foreground mb-4">
-            Hai bisogno di una soluzione personalizzata?
-          </h2>
-          <p className="text-xl text-primary-foreground/80 mb-8 max-w-2xl mx-auto">
-            I nostri esperti ti aiuteranno a trovare la configurazione perfetta per le tue esigenze aziendali.
-          </p>
-          <Button 
-            size="lg" 
-            className="bg-accent hover:bg-accent/90 text-accent-foreground btn-accent-glow text-lg px-8"
-            onClick={() => setShowQuoteForm(true)}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="max-w-3xl mx-auto"
           >
-            Parla con un Esperto
-          </Button>
+            <h2 className="text-display-sm lg:text-display font-bold text-primary-foreground mb-6">
+              Pronto a ottimizzare il tuo ufficio?
+            </h2>
+            <p className="text-xl text-primary-foreground/70 mb-10">
+              Richiedi una consulenza gratuita. I nostri esperti ti aiuteranno a 
+              trovare la soluzione perfetta per la tua azienda.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button 
+                size="lg" 
+                className="bg-gradient-accent text-accent-foreground shadow-accent-glow text-lg px-10 h-14 font-semibold"
+                onClick={() => setShowQuoteForm(true)}
+              >
+                Richiedi Preventivo
+              </Button>
+              <Button 
+                size="lg" 
+                variant="outline"
+                className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 h-14 text-lg gap-2"
+              >
+                <Phone className="h-5 w-5" />
+                02 1234 5678
+              </Button>
+            </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-card border-t border-border py-8">
-        <div className="container mx-auto px-4 text-center text-muted-foreground">
-          <p>© 2024 PrintPro Solutions. Tutti i diritti riservati.</p>
+      <footer className="bg-card border-t border-border py-12">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="flex items-center gap-2">
+              <Printer className="h-7 w-7 text-primary" />
+              <span className="text-xl font-bold text-foreground">PrintPro Solutions</span>
+            </div>
+            <p className="text-muted-foreground text-sm">
+              © 2024 PrintPro Solutions. Tutti i diritti riservati.
+            </p>
+          </div>
         </div>
       </footer>
 
       {/* Quote Form Modal */}
       <QuoteForm open={showQuoteForm} onOpenChange={setShowQuoteForm} />
     </div>
+  );
+};
+
+// Overview Section Component
+const OverviewSection = () => {
+  const features = [
+    {
+      icon: Printer,
+      title: "Qualità Superiore",
+      description: "Risoluzione 1200x1200 dpi per stampe nitide e colori vibranti. Tecnologia laser avanzata per risultati professionali su ogni documento."
+    },
+    {
+      icon: Zap,
+      title: "Massima Produttività",
+      description: "Ciclo mensile fino a 300.000 pagine. Prima pagina in uscita in 3.9 secondi. Alimentatore automatico da 300 fogli per scansioni veloci."
+    },
+    {
+      icon: Shield,
+      title: "Sicurezza Enterprise",
+      description: "Autenticazione multi-fattore, crittografia HDD, gestione centralizzata. Conforme a GDPR e standard di sicurezza aziendale."
+    },
+  ];
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="grid md:grid-cols-3 gap-6"
+    >
+      {features.map((feature, index) => (
+        <motion.div
+          key={feature.title}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: index * 0.15 }}
+          className="card-premium p-8"
+        >
+          <div className="h-14 w-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-6">
+            <feature.icon className="h-7 w-7 text-primary" />
+          </div>
+          <h3 className="text-xl font-semibold text-foreground mb-3">{feature.title}</h3>
+          <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
+        </motion.div>
+      ))}
+    </motion.div>
   );
 };
 
