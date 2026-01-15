@@ -11,12 +11,15 @@ import {
   Shield, 
   Phone,
   ChevronRight,
-  Star,
-  Truck,
-  Headphones,
+  Activity,
+  Cpu,
+  Wifi,
+  Database,
   Copy,
   Scan,
-  FileText
+  FileText,
+  Terminal,
+  CircuitBoard
 } from "lucide-react";
 
 import printerHero from "@/assets/printer-hero.png";
@@ -41,38 +44,38 @@ const Index = () => {
   ];
 
   const highlights = [
-    { icon: Printer, label: "55 ppm B/N", desc: "Alta velocità" },
-    { icon: Copy, label: "50 ppm Colore", desc: "Qualità foto" },
-    { icon: Scan, label: "80 ipm", desc: "Scansione duplex" },
-    { icon: FileText, label: "A3/A4", desc: "Multi-formato" },
-  ];
-
-  const trustBadges = [
-    { icon: Truck, text: "Consegna 24/48h" },
-    { icon: Shield, text: "Garanzia 3 anni" },
-    { icon: Headphones, text: "Assistenza dedicata" },
+    { icon: Printer, label: "55 ppm", metric: "B/N", desc: "HIGH SPEED" },
+    { icon: Copy, label: "50 ppm", metric: "COLOR", desc: "PHOTO QUALITY" },
+    { icon: Scan, label: "80 ipm", metric: "SCAN", desc: "DUPLEX AUTO" },
+    { icon: Database, label: "6.350", metric: "SHEETS", desc: "MAX CAPACITY" },
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background tech-grid relative overflow-hidden">
+      {/* Ambient glow effects */}
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-accent/5 rounded-full blur-3xl" />
+      </div>
+
       <ProductHeader onContactClick={() => setShowQuoteForm(true)} />
 
       {/* Breadcrumb */}
-      <div className="container mx-auto px-4 py-4">
-        <nav className="flex items-center gap-2 text-sm text-muted-foreground">
-          <span className="hover:text-foreground cursor-pointer transition-colors">Home</span>
-          <ChevronRight className="h-4 w-4" />
-          <span className="hover:text-foreground cursor-pointer transition-colors">Stampanti</span>
-          <ChevronRight className="h-4 w-4" />
-          <span className="text-foreground font-medium">ProPrint MX-5500</span>
+      <div className="container mx-auto px-4 py-4 relative z-10">
+        <nav className="flex items-center gap-2 text-sm font-mono">
+          <span className="text-primary/60 hover:text-primary cursor-pointer transition-colors">HOME</span>
+          <ChevronRight className="h-3 w-3 text-primary/40" />
+          <span className="text-primary/60 hover:text-primary cursor-pointer transition-colors">DEVICES</span>
+          <ChevronRight className="h-3 w-3 text-primary/40" />
+          <span className="text-primary font-medium">MX-5500</span>
         </nav>
       </div>
 
       {/* Hero Product Section */}
-      <section className="container mx-auto px-4 py-8 lg:py-12">
+      <section className="container mx-auto px-4 py-8 lg:py-16 relative z-10">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-start">
           {/* Product Gallery - Sticky on desktop */}
-          <div className="lg:sticky lg:top-8">
+          <div className="lg:sticky lg:top-24">
             <ProductGallery images={productImages} />
           </div>
 
@@ -83,32 +86,38 @@ const Index = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            {/* Badges */}
-            <div className="flex flex-wrap gap-2">
-              <Badge className="bg-success/10 text-success border-0 font-medium">
-                <Check className="h-3 w-3 mr-1" />
-                Disponibile
+            {/* Status badges */}
+            <div className="flex flex-wrap gap-3">
+              <Badge className="glass-panel border-success/30 text-success font-mono text-xs tracking-wider px-3 py-1.5">
+                <Activity className="h-3 w-3 mr-2 animate-pulse" />
+                ONLINE
               </Badge>
-              <Badge variant="outline" className="border-primary/30 text-primary font-medium">
-                Multifunzione A3/A4
+              <Badge className="glass-panel border-primary/30 text-primary font-mono text-xs tracking-wider px-3 py-1.5">
+                <Cpu className="h-3 w-3 mr-2" />
+                A3/A4 CAPABLE
               </Badge>
-              <Badge className="bg-accent/10 text-accent border-0 font-medium">
-                <Star className="h-3 w-3 mr-1 fill-current" />
-                Bestseller
+              <Badge className="glass-panel border-accent/30 text-accent font-mono text-xs tracking-wider px-3 py-1.5">
+                <Zap className="h-3 w-3 mr-2" />
+                TOP RATED
               </Badge>
             </div>
 
-            {/* Title */}
-            <div className="space-y-2">
-              <h1 className="text-display-sm lg:text-display font-bold text-foreground">
-                ProPrint MX-5500
+            {/* Title with tech styling */}
+            <div className="space-y-4">
+              <div className="flex items-center gap-3">
+                <div className="h-px flex-1 bg-gradient-to-r from-primary/50 to-transparent" />
+                <span className="text-xs font-mono text-primary/60 tracking-[0.3em]">SERIES MX</span>
+              </div>
+              <h1 className="font-display text-display-sm lg:text-display-lg text-foreground tracking-tight">
+                <span className="text-primary neon-text">PRO</span>PRINT
+                <span className="block text-primary">MX-5500</span>
               </h1>
-              <p className="text-xl text-muted-foreground">
-                Stampante Multifunzione Laser a Colori
+              <p className="text-lg font-mono text-muted-foreground">
+                ENTERPRISE MULTIFUNCTION LASER SYSTEM
               </p>
             </div>
 
-            {/* Quick Highlights */}
+            {/* Tech Metrics Grid */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {highlights.map((item, index) => (
                 <motion.div
@@ -116,42 +125,53 @@ const Index = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 + index * 0.1 }}
-                  className="card-premium p-4 text-center"
+                  className="glass-card p-4 tech-card-hover group"
                 >
-                  <item.icon className="h-5 w-5 text-primary mx-auto mb-2" />
-                  <div className="font-semibold text-foreground">{item.label}</div>
-                  <div className="text-xs text-muted-foreground">{item.desc}</div>
+                  <item.icon className="h-5 w-5 text-primary mb-3 group-hover:neon-glow transition-all" />
+                  <div className="font-display text-2xl text-foreground tracking-tight">{item.label}</div>
+                  <div className="text-xs font-mono text-primary tracking-wider">{item.metric}</div>
+                  <div className="text-xs font-mono text-muted-foreground mt-1">{item.desc}</div>
                 </motion.div>
               ))}
             </div>
 
             {/* Description */}
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              La soluzione completa per uffici che non si accontentano. Stampa, copia, 
-              scansiona e invia fax con qualità professionale. Progettata per volumi 
-              elevati e massima affidabilità, con tecnologia avanzata che riduce i 
-              costi operativi fino al 30%.
-            </p>
+            <div className="glass-panel rounded-xl p-6 space-y-4">
+              <div className="flex items-center gap-2 text-xs font-mono text-primary/60 uppercase tracking-wider">
+                <Terminal className="h-4 w-4" />
+                <span>System Overview</span>
+              </div>
+              <p className="text-muted-foreground leading-relaxed">
+                La soluzione completa per uffici che non si accontentano. Stampa, copia, 
+                scansiona e invia fax con qualità professionale. Progettata per volumi 
+                elevati e massima affidabilità, con tecnologia avanzata che riduce i 
+                costi operativi fino al <span className="text-primary font-semibold">30%</span>.
+              </p>
+            </div>
 
-            {/* Key Features List */}
-            <div className="space-y-3">
+            {/* Key Features with tech styling */}
+            <div className="space-y-4">
+              <div className="flex items-center gap-2 text-xs font-mono text-primary/60 uppercase tracking-wider">
+                <CircuitBoard className="h-4 w-4" />
+                <span>Core Features</span>
+              </div>
               {[
-                "Display touchscreen 10.1\" intuitivo con interfaccia personalizzabile",
-                "Connettività completa: Wi-Fi, Ethernet, USB 3.0, NFC per mobile print",
-                "Sicurezza enterprise: crittografia dati, autenticazione utente avanzata",
-                "Capacità carta fino a 6.350 fogli con cassetti opzionali",
+                { icon: Wifi, text: "Connettività completa: Wi-Fi, Ethernet, USB 3.0, NFC per mobile print" },
+                { icon: Shield, text: "Sicurezza enterprise: crittografia dati, autenticazione avanzata" },
+                { icon: Cpu, text: "Display touchscreen 10.1\" con interfaccia personalizzabile" },
+                { icon: Database, text: "Capacità carta fino a 6.350 fogli con cassetti opzionali" },
               ].map((feature, index) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.5 + index * 0.1 }}
-                  className="flex items-start gap-3"
+                  className="flex items-start gap-4 group"
                 >
-                  <div className="h-6 w-6 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
-                    <Check className="h-3.5 w-3.5 text-primary" />
+                  <div className="h-8 w-8 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0 group-hover:bg-primary/20 group-hover:border-primary/40 transition-all group-hover:neon-glow">
+                    <feature.icon className="h-4 w-4 text-primary" />
                   </div>
-                  <span className="text-foreground">{feature}</span>
+                  <span className="text-muted-foreground text-sm leading-relaxed pt-1">{feature.text}</span>
                 </motion.div>
               ))}
             </div>
@@ -160,53 +180,52 @@ const Index = () => {
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <Button 
                 size="lg" 
-                className="bg-gradient-accent text-accent-foreground shadow-accent-glow text-lg px-8 h-14 font-semibold"
+                className="btn-tech-primary h-14 px-8 text-base gap-2"
                 onClick={() => setShowQuoteForm(true)}
               >
-                Richiedi Preventivo Gratuito
+                <span className="font-display tracking-wider">REQUEST QUOTE</span>
+                <ChevronRight className="h-5 w-5" />
               </Button>
-              <Button size="lg" variant="outline" className="gap-2 h-14 text-lg">
+              <Button 
+                size="lg" 
+                className="btn-tech h-14 px-8 text-base gap-2"
+              >
                 <Download className="h-5 w-5" />
-                Brochure PDF
+                <span className="font-mono">DATASHEET.PDF</span>
               </Button>
-            </div>
-
-            {/* Trust Badges */}
-            <div className="flex flex-wrap gap-6 pt-6 border-t border-border">
-              {trustBadges.map((badge, index) => (
-                <div key={index} className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <badge.icon className="h-5 w-5 text-primary" />
-                  <span>{badge.text}</span>
-                </div>
-              ))}
             </div>
 
             {/* Rental Teaser */}
             <motion.div 
-              className="card-premium p-6 bg-gradient-subtle"
+              className="glass-panel rounded-xl p-6 animated-border relative overflow-hidden"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8 }}
             >
               <div className="flex items-center justify-between flex-wrap gap-4">
                 <div>
-                  <p className="text-sm text-muted-foreground mb-1">Noleggio operativo da</p>
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-3xl font-bold text-foreground">€89</span>
-                    <span className="text-muted-foreground">/mese</span>
+                  <p className="text-xs font-mono text-primary/60 uppercase tracking-wider mb-2">
+                    Rental Program Starting From
+                  </p>
+                  <div className="flex items-baseline gap-2">
+                    <span className="font-display text-4xl text-primary neon-text">€89</span>
+                    <span className="text-muted-foreground font-mono">/month</span>
                   </div>
-                  <p className="text-sm text-muted-foreground mt-1">
-                    Toner e assistenza inclusi • 36 mesi
+                  <p className="text-xs font-mono text-muted-foreground mt-2">
+                    TONER + SUPPORT INCLUDED • 36 MONTHS
                   </p>
                 </div>
-                <Button variant="outline" className="gap-2" onClick={() => {
-                  const tabsElement = document.querySelector('[data-value="rental"]');
-                  if (tabsElement) {
-                    tabsElement.scrollIntoView({ behavior: 'smooth' });
-                    (tabsElement as HTMLElement).click();
-                  }
-                }}>
-                  Scopri i piani
+                <Button 
+                  className="btn-tech gap-2" 
+                  onClick={() => {
+                    const tabsElement = document.querySelector('[data-value="rental"]');
+                    if (tabsElement) {
+                      tabsElement.scrollIntoView({ behavior: 'smooth' });
+                      (tabsElement as HTMLElement).click();
+                    }
+                  }}
+                >
+                  <span className="font-mono">VIEW PLANS</span>
                   <ChevronRight className="h-4 w-4" />
                 </Button>
               </div>
@@ -216,19 +235,32 @@ const Index = () => {
       </section>
 
       {/* Tabs Section */}
-      <section className="bg-gradient-subtle py-16 lg:py-24">
-        <div className="container mx-auto px-4">
+      <section className="relative py-16 lg:py-24 bg-hero-gradient">
+        {/* Decorative lines */}
+        <div className="absolute inset-0 tech-grid-dense opacity-50" />
+        
+        <div className="container mx-auto px-4 relative z-10">
           <Tabs defaultValue="overview" className="w-full">
             <div className="flex justify-center mb-12">
-              <TabsList className="h-14 p-1.5 bg-card shadow-premium">
-                <TabsTrigger value="overview" className="h-full px-6 text-base font-medium data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
-                  Panoramica
+              <TabsList className="h-14 p-1.5 glass-panel rounded-xl border border-primary/20">
+                <TabsTrigger 
+                  value="overview" 
+                  className="h-full px-6 font-mono text-sm tracking-wider data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:neon-glow rounded-lg transition-all"
+                >
+                  OVERVIEW
                 </TabsTrigger>
-                <TabsTrigger value="specs" className="h-full px-6 text-base font-medium data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
-                  Specifiche Tecniche
+                <TabsTrigger 
+                  value="specs" 
+                  className="h-full px-6 font-mono text-sm tracking-wider data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:neon-glow rounded-lg transition-all"
+                >
+                  TECH SPECS
                 </TabsTrigger>
-                <TabsTrigger value="rental" data-value="rental" className="h-full px-6 text-base font-medium data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
-                  Noleggio
+                <TabsTrigger 
+                  value="rental" 
+                  data-value="rental" 
+                  className="h-full px-6 font-mono text-sm tracking-wider data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:neon-glow rounded-lg transition-all"
+                >
+                  RENTAL
                 </TabsTrigger>
               </TabsList>
             </div>
@@ -251,37 +283,48 @@ const Index = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-gradient-dark py-20 lg:py-28">
-        <div className="container mx-auto px-4 text-center">
+      <section className="relative py-20 lg:py-28 overflow-hidden">
+        {/* Background effects */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent" />
+        <div className="absolute inset-0 circuit-pattern opacity-30" />
+        
+        <div className="container mx-auto px-4 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="max-w-3xl mx-auto"
+            className="max-w-3xl mx-auto text-center"
           >
-            <h2 className="text-display-sm lg:text-display font-bold text-primary-foreground mb-6">
-              Pronto a ottimizzare il tuo ufficio?
+            <div className="inline-flex items-center gap-2 px-4 py-2 glass-panel rounded-full mb-8">
+              <span className="h-2 w-2 rounded-full bg-success animate-pulse" />
+              <span className="text-xs font-mono text-muted-foreground uppercase tracking-wider">
+                System Ready For Deployment
+              </span>
+            </div>
+            
+            <h2 className="font-display text-display-sm lg:text-display text-foreground mb-6">
+              READY TO <span className="text-primary neon-text">UPGRADE</span>?
             </h2>
-            <p className="text-xl text-primary-foreground/70 mb-10">
+            <p className="text-lg text-muted-foreground mb-10 max-w-xl mx-auto">
               Richiedi una consulenza gratuita. I nostri esperti ti aiuteranno a 
               trovare la soluzione perfetta per la tua azienda.
             </p>
+            
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button 
                 size="lg" 
-                className="bg-gradient-accent text-accent-foreground shadow-accent-glow text-lg px-10 h-14 font-semibold"
+                className="btn-tech-primary h-14 px-10 text-base"
                 onClick={() => setShowQuoteForm(true)}
               >
-                Richiedi Preventivo
+                <span className="font-display tracking-wider">REQUEST QUOTE</span>
               </Button>
               <Button 
                 size="lg" 
-                variant="outline"
-                className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 h-14 text-lg gap-2"
+                className="btn-tech h-14 px-8 text-base gap-2"
               >
                 <Phone className="h-5 w-5" />
-                02 1234 5678
+                <span className="font-mono">02 1234 5678</span>
               </Button>
             </div>
           </motion.div>
@@ -289,15 +332,19 @@ const Index = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-card border-t border-border py-12">
+      <footer className="glass-panel border-t border-primary/20 py-8">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex items-center gap-2">
-              <Printer className="h-7 w-7 text-primary" />
-              <span className="text-xl font-bold text-foreground">PrintPro Solutions</span>
+            <div className="flex items-center gap-3">
+              <div className="h-10 w-10 rounded-lg border border-primary/30 flex items-center justify-center neon-glow">
+                <Printer className="h-5 w-5 text-primary" />
+              </div>
+              <span className="font-display text-xl text-foreground tracking-wide">
+                PRINT<span className="text-primary">PRO</span>
+              </span>
             </div>
-            <p className="text-muted-foreground text-sm">
-              © 2024 PrintPro Solutions. Tutti i diritti riservati.
+            <p className="text-xs font-mono text-muted-foreground">
+              © 2024 PRINTPRO SOLUTIONS // ALL RIGHTS RESERVED
             </p>
           </div>
         </div>
@@ -314,18 +361,24 @@ const OverviewSection = () => {
   const features = [
     {
       icon: Printer,
-      title: "Qualità Superiore",
-      description: "Risoluzione 1200x1200 dpi per stampe nitide e colori vibranti. Tecnologia laser avanzata per risultati professionali su ogni documento."
+      title: "PRINT QUALITY",
+      metric: "1200x1200",
+      unit: "DPI",
+      description: "Risoluzione superiore per stampe nitide e colori vibranti. Tecnologia laser avanzata per risultati professionali."
     },
     {
       icon: Zap,
-      title: "Massima Produttività",
-      description: "Ciclo mensile fino a 300.000 pagine. Prima pagina in uscita in 3.9 secondi. Alimentatore automatico da 300 fogli per scansioni veloci."
+      title: "PERFORMANCE",
+      metric: "300K",
+      unit: "PAGES/MONTH",
+      description: "Ciclo mensile massimo. Prima pagina in uscita in 3.9 secondi. Alimentatore automatico da 300 fogli."
     },
     {
       icon: Shield,
-      title: "Sicurezza Enterprise",
-      description: "Autenticazione multi-fattore, crittografia HDD, gestione centralizzata. Conforme a GDPR e standard di sicurezza aziendale."
+      title: "SECURITY",
+      metric: "AES-256",
+      unit: "ENCRYPTION",
+      description: "Autenticazione multi-fattore, crittografia HDD, gestione centralizzata. Conforme a GDPR."
     },
   ];
 
@@ -342,13 +395,17 @@ const OverviewSection = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: index * 0.15 }}
-          className="card-premium p-8"
+          className="glass-card p-8 tech-card-hover tech-corners"
         >
-          <div className="h-14 w-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-6">
+          <div className="h-14 w-14 rounded-xl bg-primary/10 border border-primary/30 flex items-center justify-center mb-6">
             <feature.icon className="h-7 w-7 text-primary" />
           </div>
-          <h3 className="text-xl font-semibold text-foreground mb-3">{feature.title}</h3>
-          <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
+          <h3 className="font-display text-lg text-foreground mb-2 tracking-wider">{feature.title}</h3>
+          <div className="flex items-baseline gap-2 mb-4">
+            <span className="font-display text-3xl text-primary">{feature.metric}</span>
+            <span className="text-xs font-mono text-muted-foreground">{feature.unit}</span>
+          </div>
+          <p className="text-muted-foreground text-sm leading-relaxed">{feature.description}</p>
         </motion.div>
       ))}
     </motion.div>
