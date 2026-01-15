@@ -15,6 +15,8 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+        display: ['Orbitron', 'sans-serif'],
+        mono: ['JetBrains Mono', 'monospace'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -54,6 +56,13 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        neon: {
+          cyan: "hsl(var(--neon-cyan))",
+          magenta: "hsl(var(--neon-magenta))",
+          purple: "hsl(var(--neon-purple))",
+          blue: "hsl(var(--neon-blue))",
+          green: "hsl(var(--neon-green))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -74,10 +83,10 @@ export default {
         "3xl": "calc(var(--radius) + 16px)",
       },
       fontSize: {
-        "display-xl": ["4.5rem", { lineHeight: "1.1", letterSpacing: "-0.02em" }],
-        "display-lg": ["3.75rem", { lineHeight: "1.1", letterSpacing: "-0.02em" }],
-        "display": ["3rem", { lineHeight: "1.2", letterSpacing: "-0.02em" }],
-        "display-sm": ["2.25rem", { lineHeight: "1.2", letterSpacing: "-0.01em" }],
+        "display-xl": ["5rem", { lineHeight: "1", letterSpacing: "-0.02em", fontWeight: "700" }],
+        "display-lg": ["4rem", { lineHeight: "1.05", letterSpacing: "-0.02em", fontWeight: "700" }],
+        "display": ["3rem", { lineHeight: "1.1", letterSpacing: "-0.02em", fontWeight: "700" }],
+        "display-sm": ["2.25rem", { lineHeight: "1.15", letterSpacing: "-0.01em", fontWeight: "600" }],
       },
       keyframes: {
         "accordion-down": {
@@ -104,13 +113,34 @@ export default {
           from: { opacity: "0", transform: "scale(0.95)" },
           to: { opacity: "1", transform: "scale(1)" },
         },
-        "pulse-subtle": {
-          "0%, 100%": { opacity: "1" },
-          "50%": { opacity: "0.8" },
+        "glow-pulse": {
+          "0%, 100%": { 
+            boxShadow: "0 0 5px hsl(var(--primary) / 0.3), 0 0 10px hsl(var(--primary) / 0.1)" 
+          },
+          "50%": { 
+            boxShadow: "0 0 20px hsl(var(--primary) / 0.6), 0 0 40px hsl(var(--primary) / 0.3)" 
+          },
         },
-        shimmer: {
+        "float": {
+          "0%, 100%": { transform: "translateY(0px)" },
+          "50%": { transform: "translateY(-10px)" },
+        },
+        "rotate-slow": {
+          from: { transform: "rotate(0deg)" },
+          to: { transform: "rotate(360deg)" },
+        },
+        "shimmer": {
           "0%": { backgroundPosition: "-200% 0" },
           "100%": { backgroundPosition: "200% 0" },
+        },
+        "scan": {
+          "0%": { transform: "translateY(-100%)" },
+          "100%": { transform: "translateY(100%)" },
+        },
+        "flicker": {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0.8" },
+          "75%": { opacity: "0.9" },
         },
       },
       animation: {
@@ -120,11 +150,16 @@ export default {
         "fade-in-up": "fade-in-up 0.8s ease-out forwards",
         "slide-in-right": "slide-in-right 0.5s ease-out forwards",
         "scale-in": "scale-in 0.4s ease-out forwards",
-        "pulse-subtle": "pulse-subtle 2s ease-in-out infinite",
-        shimmer: "shimmer 2s linear infinite",
+        "glow-pulse": "glow-pulse 2s ease-in-out infinite",
+        "float": "float 6s ease-in-out infinite",
+        "rotate-slow": "rotate-slow 20s linear infinite",
+        "shimmer": "shimmer 2s linear infinite",
+        "scan": "scan 3s linear infinite",
+        "flicker": "flicker 3s ease-in-out infinite",
       },
-      transitionTimingFunction: {
-        "bounce-soft": "cubic-bezier(0.34, 1.56, 0.64, 1)",
+      backgroundImage: {
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+        "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
     },
   },
