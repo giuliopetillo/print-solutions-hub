@@ -6,7 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { Send, CheckCircle, Terminal } from "lucide-react";
+import { Send, CheckCircle, Sparkles, ArrowRight } from "lucide-react";
 import { useState } from "react";
 
 interface QuoteFormProps {
@@ -22,7 +22,7 @@ const QuoteForm = ({ open, onOpenChange }: QuoteFormProps) => {
     e.preventDefault();
     setIsSubmitted(true);
     setTimeout(() => {
-      toast({ title: "Request Submitted!", description: "We'll contact you within 24 business hours." });
+      toast({ title: "Richiesta inviata!", description: "Ti contatteremo entro 24 ore lavorative." });
       onOpenChange(false);
       setIsSubmitted(false);
     }, 2000);
@@ -30,85 +30,105 @@ const QuoteForm = ({ open, onOpenChange }: QuoteFormProps) => {
 
   return (
     <Dialog open={open} onOpenChange={(value) => { onOpenChange(value); if (!value) setIsSubmitted(false); }}>
-      <DialogContent className="sm:max-w-lg glass-panel border-primary/30 overflow-hidden">
+      <DialogContent className="sm:max-w-lg glass-strong border-border overflow-hidden rounded-3xl">
         <AnimatePresence mode="wait">
           {isSubmitted ? (
-            <motion.div key="success" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="py-12 text-center">
-              <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 0.2, type: "spring" }} className="h-20 w-20 rounded-xl border border-success/30 bg-success/10 flex items-center justify-center mx-auto mb-6 neon-glow" style={{ boxShadow: '0 0 20px hsl(150 100% 50% / 0.3)' }}>
-                <CheckCircle className="h-10 w-10 text-success" />
+            <motion.div 
+              key="success" 
+              initial={{ opacity: 0, scale: 0.9 }} 
+              animate={{ opacity: 1, scale: 1 }} 
+              className="py-12 text-center"
+            >
+              <motion.div 
+                initial={{ scale: 0 }} 
+                animate={{ scale: 1 }} 
+                transition={{ delay: 0.2, type: "spring" }} 
+                className="h-20 w-20 rounded-2xl bg-gradient-ai flex items-center justify-center mx-auto mb-6 shadow-glow-success"
+              >
+                <CheckCircle className="h-10 w-10 text-white" />
               </motion.div>
-              <h3 className="font-display text-2xl text-foreground mb-2">REQUEST SENT</h3>
-              <p className="text-muted-foreground font-mono text-sm">We'll contact you within 24 business hours.</p>
+              <h3 className="font-display text-2xl text-foreground mb-2">Richiesta Inviata</h3>
+              <p className="text-muted-foreground">Ti contatteremo entro 24 ore lavorative.</p>
             </motion.div>
           ) : (
             <motion.div key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
               <DialogHeader>
                 <div className="flex items-center gap-2 mb-2">
-                  <Terminal className="h-4 w-4 text-primary" />
-                  <span className="text-xs font-mono text-primary/60 tracking-wider">QUOTE REQUEST FORM</span>
+                  <Sparkles className="h-4 w-4 text-primary" />
+                  <span className="text-xs text-primary font-medium">Preventivo gratuito</span>
                 </div>
-                <DialogTitle className="font-display text-2xl tracking-wide">REQUEST <span className="text-primary">QUOTE</span></DialogTitle>
-                <DialogDescription className="font-mono text-sm">Fill the form to receive a personalized quote within 24h.</DialogDescription>
+                <DialogTitle className="font-display text-2xl">
+                  Richiedi <span className="text-gradient-ai">Preventivo</span>
+                </DialogTitle>
+                <DialogDescription>
+                  Compila il modulo per ricevere un preventivo personalizzato entro 24h.
+                </DialogDescription>
               </DialogHeader>
               <form onSubmit={handleSubmit} className="space-y-5 mt-6">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="firstName" className="font-mono text-xs tracking-wider text-muted-foreground">FIRST NAME *</Label>
-                    <Input id="firstName" placeholder="Mario" required className="h-11 glass-card border-primary/20 font-mono" />
+                    <Label htmlFor="firstName" className="text-xs text-muted-foreground">Nome *</Label>
+                    <Input id="firstName" placeholder="Mario" required className="h-11 glass border-border rounded-xl" />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="lastName" className="font-mono text-xs tracking-wider text-muted-foreground">LAST NAME *</Label>
-                    <Input id="lastName" placeholder="Rossi" required className="h-11 glass-card border-primary/20 font-mono" />
+                    <Label htmlFor="lastName" className="text-xs text-muted-foreground">Cognome *</Label>
+                    <Input id="lastName" placeholder="Rossi" required className="h-11 glass border-border rounded-xl" />
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="company" className="font-mono text-xs tracking-wider text-muted-foreground">COMPANY *</Label>
-                  <Input id="company" placeholder="Company Name S.r.l." required className="h-11 glass-card border-primary/20 font-mono" />
+                  <Label htmlFor="company" className="text-xs text-muted-foreground">Azienda *</Label>
+                  <Input id="company" placeholder="Nome Azienda S.r.l." required className="h-11 glass border-border rounded-xl" />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="email" className="font-mono text-xs tracking-wider text-muted-foreground">EMAIL *</Label>
-                    <Input id="email" type="email" placeholder="email@company.it" required className="h-11 glass-card border-primary/20 font-mono" />
+                    <Label htmlFor="email" className="text-xs text-muted-foreground">Email *</Label>
+                    <Input id="email" type="email" placeholder="email@azienda.it" required className="h-11 glass border-border rounded-xl" />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="phone" className="font-mono text-xs tracking-wider text-muted-foreground">PHONE *</Label>
-                    <Input id="phone" type="tel" placeholder="+39 02 1234567" required className="h-11 glass-card border-primary/20 font-mono" />
+                    <Label htmlFor="phone" className="text-xs text-muted-foreground">Telefono *</Label>
+                    <Input id="phone" type="tel" placeholder="+39 02 1234567" required className="h-11 glass border-border rounded-xl" />
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label className="font-mono text-xs tracking-wider text-muted-foreground">INTEREST</Label>
+                    <Label className="text-xs text-muted-foreground">Interesse</Label>
                     <Select>
-                      <SelectTrigger className="h-11 glass-card border-primary/20 font-mono"><SelectValue placeholder="Select" /></SelectTrigger>
-                      <SelectContent className="glass-panel border-primary/20">
-                        <SelectItem value="purchase">Purchase</SelectItem>
-                        <SelectItem value="rental">Rental</SelectItem>
-                        <SelectItem value="both">Both</SelectItem>
+                      <SelectTrigger className="h-11 glass border-border rounded-xl">
+                        <SelectValue placeholder="Seleziona" />
+                      </SelectTrigger>
+                      <SelectContent className="glass-strong border-border rounded-xl">
+                        <SelectItem value="purchase">Acquisto</SelectItem>
+                        <SelectItem value="rental">Noleggio</SelectItem>
+                        <SelectItem value="both">Entrambi</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
                   <div className="space-y-2">
-                    <Label className="font-mono text-xs tracking-wider text-muted-foreground">MONTHLY VOLUME</Label>
+                    <Label className="text-xs text-muted-foreground">Volume Mensile</Label>
                     <Select>
-                      <SelectTrigger className="h-11 glass-card border-primary/20 font-mono"><SelectValue placeholder="Select" /></SelectTrigger>
-                      <SelectContent className="glass-panel border-primary/20">
-                        <SelectItem value="low">{'< 5,000 pages'}</SelectItem>
-                        <SelectItem value="medium">5,000 - 15,000</SelectItem>
-                        <SelectItem value="high">15,000 - 30,000</SelectItem>
-                        <SelectItem value="veryhigh">{'>30,000 pages'}</SelectItem>
+                      <SelectTrigger className="h-11 glass border-border rounded-xl">
+                        <SelectValue placeholder="Seleziona" />
+                      </SelectTrigger>
+                      <SelectContent className="glass-strong border-border rounded-xl">
+                        <SelectItem value="low">{'< 5.000 pagine'}</SelectItem>
+                        <SelectItem value="medium">5.000 - 15.000</SelectItem>
+                        <SelectItem value="high">15.000 - 30.000</SelectItem>
+                        <SelectItem value="veryhigh">{'>30.000 pagine'}</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="message" className="font-mono text-xs tracking-wider text-muted-foreground">ADDITIONAL NOTES</Label>
-                  <Textarea id="message" placeholder="Describe your specific needs..." rows={3} className="resize-none glass-card border-primary/20 font-mono" />
+                  <Label htmlFor="message" className="text-xs text-muted-foreground">Note Aggiuntive</Label>
+                  <Textarea id="message" placeholder="Descrivi le tue esigenze specifiche..." rows={3} className="resize-none glass border-border rounded-xl" />
                 </div>
                 <div className="flex gap-3 pt-2">
-                  <Button type="button" className="flex-1 h-12 btn-tech" onClick={() => onOpenChange(false)}>CANCEL</Button>
-                  <Button type="submit" className="flex-1 h-12 btn-tech-primary gap-2">
-                    <Send className="h-4 w-4" />
-                    SUBMIT
+                  <Button type="button" className="flex-1 h-12 btn-ai-outline rounded-xl" onClick={() => onOpenChange(false)}>
+                    Annulla
+                  </Button>
+                  <Button type="submit" className="flex-1 h-12 btn-ai rounded-xl">
+                    Invia Richiesta
+                    <ArrowRight className="h-4 w-4 ml-2" />
                   </Button>
                 </div>
               </form>
