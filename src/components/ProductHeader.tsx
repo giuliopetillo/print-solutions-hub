@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Printer, Phone, Menu, Sparkles } from "lucide-react";
+import { Printer, Phone, Menu } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 interface ProductHeaderProps {
@@ -15,19 +15,17 @@ const ProductHeader = ({ onContactClick }: ProductHeaderProps) => {
   ];
 
   return (
-    <header className="sticky top-0 z-50 glass-strong border-b border-border">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16 lg:h-20">
+    <header className="sticky top-0 z-50 bg-card border-b border-border">
+      <div className="section-container">
+        <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <a href="/" className="flex items-center gap-3 group">
-            <div className="h-10 w-10 rounded-xl bg-gradient-ai flex items-center justify-center transition-all group-hover:shadow-glow-primary">
-              <Printer className="h-5 w-5 text-white" />
+          <a href="/" className="flex items-center gap-2">
+            <div className="h-9 w-9 rounded bg-primary flex items-center justify-center">
+              <Printer className="h-5 w-5 text-primary-foreground" />
             </div>
-            <div className="hidden sm:block">
-              <span className="font-display text-xl text-foreground">
-                Print<span className="text-gradient-ai">Pro</span>
-              </span>
-            </div>
+            <span className="font-bold text-lg text-foreground hidden sm:block">
+              MPF S.p.A.
+            </span>
           </a>
 
           {/* Desktop Navigation */}
@@ -36,10 +34,9 @@ const ProductHeader = ({ onContactClick }: ProductHeaderProps) => {
               <a
                 key={item.label}
                 href={item.href}
-                className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium relative group"
+                className="nav-link"
               >
                 {item.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-ai group-hover:w-full transition-all duration-300 rounded-full" />
               </a>
             ))}
           </nav>
@@ -48,39 +45,38 @@ const ProductHeader = ({ onContactClick }: ProductHeaderProps) => {
           <div className="flex items-center gap-3">
             <Button 
               variant="ghost" 
-              className="hidden sm:flex gap-2 text-muted-foreground hover:text-foreground text-sm"
+              className="hidden sm:flex gap-2 text-muted-foreground hover:text-primary text-sm"
             >
               <Phone className="h-4 w-4" />
               <span className="hidden md:inline">02 1234 5678</span>
             </Button>
             <Button 
-              className="btn-ai gap-2"
+              className="btn-mpf text-sm"
               onClick={onContactClick}
             >
-              <Sparkles className="h-4 w-4" />
               Contattaci
             </Button>
 
             {/* Mobile Menu */}
             <Sheet>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="lg:hidden text-foreground hover:bg-secondary">
+                <Button variant="ghost" size="icon" className="lg:hidden text-foreground">
                   <Menu className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-80 glass-strong border-l border-border">
+              <SheetContent side="right" className="w-72 bg-card border-l border-border">
                 <nav className="flex flex-col gap-1 mt-8">
                   {navItems.map((item) => (
                     <a
                       key={item.label}
                       href={item.href}
-                      className="text-lg text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors py-3 px-4 rounded-xl"
+                      className="text-base text-muted-foreground hover:text-primary hover:bg-muted transition-colors py-3 px-4 rounded"
                     >
                       {item.label}
                     </a>
                   ))}
-                  <div className="pt-6 mt-6 border-t border-border">
-                    <Button className="w-full btn-ai" onClick={onContactClick}>
+                  <div className="pt-4 mt-4 border-t border-border">
+                    <Button className="w-full btn-mpf" onClick={onContactClick}>
                       Richiedi Preventivo
                     </Button>
                   </div>
