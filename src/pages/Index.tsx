@@ -318,10 +318,10 @@ const Index = () => {
 const OverviewSection = () => {
   const features = [
     {
-      icon: Printer,
-      title: "Qualità di Stampa",
-      metric: "1200x1200 DPI",
-      description: "Risoluzione superiore per stampe nitide e colori vibranti. Tecnologia laser avanzata per risultati professionali."
+      icon: Layers,
+      title: "Target Ideale",
+      metric: "Uffici 20-100 utenti",
+      description: "Studi professionali, PMI e aziende con volumi di stampa medio-alti. Perfetto per ambienti condivisi che richiedono affidabilità e performance."
     },
     {
       icon: Zap,
