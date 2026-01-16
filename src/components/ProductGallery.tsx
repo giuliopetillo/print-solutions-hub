@@ -20,26 +20,26 @@ const ProductGallery = ({ images }: ProductGalleryProps) => {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3">
       {/* Main Image */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
+        initial={{ opacity: 0, scale: 0.98 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5 }}
-        className="relative aspect-square card-ai rounded-3xl overflow-hidden group cursor-pointer"
+        transition={{ duration: 0.4 }}
+        className="relative aspect-square card-mpf rounded-lg overflow-hidden group cursor-pointer"
         onClick={() => setIsZoomed(true)}
       >
         {/* View indicator */}
-        <div className="absolute top-4 left-4 z-20">
-          <div className="badge-ai">
-            {String(selectedIndex + 1).padStart(2, '0')} / {String(images.length).padStart(2, '0')}
+        <div className="absolute top-3 left-3 z-20">
+          <div className="badge-neutral">
+            {selectedIndex + 1} / {images.length}
           </div>
         </div>
         
         {/* Zoom icon */}
-        <div className="absolute top-4 right-4 z-20">
-          <div className="h-10 w-10 rounded-xl glass flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-            <Maximize2 className="h-4 w-4 text-foreground" />
+        <div className="absolute top-3 right-3 z-20">
+          <div className="h-8 w-8 rounded bg-card/80 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+            <Maximize2 className="h-4 w-4 text-muted-foreground" />
           </div>
         </div>
 
@@ -48,86 +48,84 @@ const ProductGallery = ({ images }: ProductGalleryProps) => {
             key={selectedIndex}
             src={images[selectedIndex].src}
             alt={images[selectedIndex].alt}
-            className="w-full h-full object-contain p-8"
-            initial={{ opacity: 0, scale: 1.02 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.98 }}
-            transition={{ duration: 0.3 }}
+            className="w-full h-full object-contain p-6"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
           />
         </AnimatePresence>
 
         {/* Navigation Arrows */}
         <button
           onClick={(e) => { e.stopPropagation(); handlePrev(); }}
-          className="absolute left-4 top-1/2 -translate-y-1/2 h-12 w-12 rounded-xl glass flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all hover:bg-secondary"
+          className="absolute left-3 top-1/2 -translate-y-1/2 h-10 w-10 rounded bg-card/90 border border-border flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all hover:bg-card"
         >
-          <ChevronLeft className="h-5 w-5 text-foreground" />
+          <ChevronLeft className="h-5 w-5 text-muted-foreground" />
         </button>
         <button
           onClick={(e) => { e.stopPropagation(); handleNext(); }}
-          className="absolute right-4 top-1/2 -translate-y-1/2 h-12 w-12 rounded-xl glass flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all hover:bg-secondary"
+          className="absolute right-3 top-1/2 -translate-y-1/2 h-10 w-10 rounded bg-card/90 border border-border flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all hover:bg-card"
         >
-          <ChevronRight className="h-5 w-5 text-foreground" />
+          <ChevronRight className="h-5 w-5 text-muted-foreground" />
         </button>
       </motion.div>
 
       {/* Thumbnails */}
-      <div className="grid grid-cols-4 gap-3">
+      <div className="grid grid-cols-4 gap-2">
         {images.map((image, index) => (
-          <motion.button
+          <button
             key={index}
             onClick={() => setSelectedIndex(index)}
-            className={`relative aspect-square rounded-2xl overflow-hidden card-ai transition-all ${
+            className={`relative aspect-square rounded overflow-hidden card-mpf transition-all ${
               selectedIndex === index
-                ? "ring-2 ring-primary shadow-glow-primary"
-                : "opacity-60 hover:opacity-100"
+                ? "ring-2 ring-primary"
+                : "opacity-70 hover:opacity-100"
             }`}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
           >
             <img
               src={image.src}
               alt={image.alt}
               className="w-full h-full object-contain p-2"
             />
-          </motion.button>
+          </button>
         ))}
       </div>
 
       {/* Zoom Modal */}
       <Dialog open={isZoomed} onOpenChange={setIsZoomed}>
-        <DialogContent className="max-w-5xl w-full glass-strong border-border p-0 rounded-3xl overflow-hidden">
+        <DialogContent className="max-w-4xl w-full bg-card border-border p-0 rounded-lg overflow-hidden">
           <div className="relative aspect-square">
             <img
               src={images[selectedIndex].src}
               alt={images[selectedIndex].alt}
-              className="w-full h-full object-contain p-12"
+              className="w-full h-full object-contain p-8"
             />
             
             {/* Navigation in modal */}
             <button
               onClick={handlePrev}
-              className="absolute left-4 top-1/2 -translate-y-1/2 h-14 w-14 rounded-xl glass flex items-center justify-center hover:bg-secondary transition-all"
+              className="absolute left-4 top-1/2 -translate-y-1/2 h-12 w-12 rounded bg-muted/80 flex items-center justify-center hover:bg-muted transition-all"
             >
               <ChevronLeft className="h-6 w-6 text-foreground" />
             </button>
             <button
               onClick={handleNext}
-              className="absolute right-4 top-1/2 -translate-y-1/2 h-14 w-14 rounded-xl glass flex items-center justify-center hover:bg-secondary transition-all"
+              className="absolute right-4 top-1/2 -translate-y-1/2 h-12 w-12 rounded bg-muted/80 flex items-center justify-center hover:bg-muted transition-all"
             >
               <ChevronRight className="h-6 w-6 text-foreground" />
             </button>
 
             {/* Dots indicator */}
-            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 glass rounded-full p-2">
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 bg-muted/80 rounded-full px-3 py-2">
               {images.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setSelectedIndex(index)}
                   className={`h-2 rounded-full transition-all ${
                     selectedIndex === index
-                      ? "w-8 bg-gradient-ai"
-                      : "w-2 bg-muted-foreground/30 hover:bg-muted-foreground/50"
+                      ? "w-6 bg-primary"
+                      : "w-2 bg-muted-foreground/40 hover:bg-muted-foreground/60"
                   }`}
                 />
               ))}

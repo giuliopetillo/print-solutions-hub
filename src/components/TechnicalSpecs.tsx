@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Printer, Copy, Scan, Settings, Cpu } from "lucide-react";
+import { Printer, Copy, Scan, Settings } from "lucide-react";
 
 const TechnicalSpecs = () => {
   const categories = [
@@ -49,21 +49,18 @@ const TechnicalSpecs = () => {
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-      <Card className="card-ai overflow-hidden">
-        <CardHeader className="glass border-b border-border">
-          <div className="flex items-center gap-3">
-            <Cpu className="h-5 w-5 text-primary" />
-            <span className="font-display text-xl">Specifiche Tecniche</span>
-          </div>
+      <Card className="card-mpf overflow-hidden">
+        <CardHeader className="bg-muted border-b border-border">
+          <span className="font-semibold text-foreground">Specifiche Tecniche</span>
         </CardHeader>
-        <CardContent className="p-6 lg:p-8">
+        <CardContent className="p-5 lg:p-6">
           <Tabs defaultValue="print" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 lg:grid-cols-4 gap-2 h-auto p-1.5 glass rounded-2xl">
+            <TabsList className="grid w-full grid-cols-2 lg:grid-cols-4 gap-1 h-auto p-1 bg-muted rounded-lg">
               {categories.map((cat) => (
                 <TabsTrigger 
                   key={cat.id} 
                   value={cat.id} 
-                  className="flex items-center gap-2 py-3 text-sm font-medium data-[state=active]:bg-gradient-ai data-[state=active]:text-white rounded-xl transition-all"
+                  className="flex items-center gap-2 py-2.5 text-sm font-medium data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded transition-all"
                 >
                   <cat.icon className="h-4 w-4" />
                   <span className="hidden sm:inline">{cat.label}</span>
@@ -71,7 +68,7 @@ const TechnicalSpecs = () => {
               ))}
             </TabsList>
             {categories.map((cat) => (
-              <TabsContent key={cat.id} value={cat.id} className="mt-6">
+              <TabsContent key={cat.id} value={cat.id} className="mt-5">
                 <motion.div 
                   initial={{ opacity: 0, y: 10 }} 
                   animate={{ opacity: 1, y: 0 }} 
@@ -80,12 +77,12 @@ const TechnicalSpecs = () => {
                   {cat.specs.map((spec, index) => (
                     <motion.div 
                       key={spec.label} 
-                      initial={{ opacity: 0, x: -10 }} 
-                      animate={{ opacity: 1, x: 0 }} 
-                      transition={{ delay: index * 0.03 }} 
-                      className="flex items-center justify-between py-4 hover:bg-secondary/50 px-4 -mx-4 rounded-xl transition-colors group"
+                      initial={{ opacity: 0 }} 
+                      animate={{ opacity: 1 }} 
+                      transition={{ delay: index * 0.02 }} 
+                      className="flex items-center justify-between py-3 hover:bg-muted px-3 -mx-3 rounded transition-colors"
                     >
-                      <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">{spec.label}</span>
+                      <span className="text-sm text-muted-foreground">{spec.label}</span>
                       <span className="text-sm font-medium text-foreground">{spec.value}</span>
                     </motion.div>
                   ))}
